@@ -1,0 +1,48 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+//支持groovy
+//apply plugin: 'groovy'
+apply from: rootProject.getRootDir().getAbsolutePath() + "/utils.gradle"//查看函数调用
+
+//设置脚本的运行环境
+buildscript {
+    repositories {
+        jcenter()
+//        maven { url 'https://oss.jfrog.org/libs-snapshot' }
+    }//声明仓库的源
+	
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.3'//声明了android gradle plugin的版本
+		//classpath 'com.android.tools.build:gradle:3.0.0'//声明了android gradle plugin的版本
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.1'
+		//classpath ('com.tencent.tinker:tinker-patch-gradle-plugin:1.9.1')
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()    
+		
+        maven {
+            url 'http://www.idescout.com/maven/repo/'
+        }//数据库可视化服务,配合插件sqlscout
+		
+        maven { url "https://jitpack.io" }//GreenDaoUpgradeHelper
+		
+		flatDir {
+			dirs 'libs'
+		}//把aar放在项目的根目录中
+    }
+	
+	tasks.withType(JavaCompile){
+        options.encoding = "UTF-8"
+    }//全局设定编码
+	
+	
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
