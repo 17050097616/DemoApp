@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/insertBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="insertBtn"/>
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="delete"/>
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="btnUpdate"/>
+
+    <Button
+        android:id="@+id/queryBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="queryBtn"/>
+
+    <Button
+        android:id="@+id/queryTwoBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="queryTwoBtn"/>
+
+    <Button
+        android:id="@+id/queryMoreBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="queryMoreBtn"/>
+
+    <TextView
+        android:id="@+id/tv"
+        android:textColor="@android:color/darker_gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

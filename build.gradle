@@ -3,16 +3,16 @@
 //apply plugin: 'groovy'
 apply from: rootProject.getRootDir().getAbsolutePath() + "/utils.gradle"//查看函数调用
 
-//设置脚本的运行环境
-buildscript {
+buildscript {//设置脚本的运行环境
     repositories {
         jcenter()
 //        maven { url 'https://oss.jfrog.org/libs-snapshot' }
+        google()
     }//声明仓库的源
 	
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'//声明了android gradle plugin的版本
-		//classpath 'com.android.tools.build:gradle:3.0.0'//声明了android gradle plugin的版本
+        //classpath 'com.android.tools.build:gradle:2.3.3'//声明了android gradle plugin的版本
+		classpath 'com.android.tools.build:gradle:3.0.1'//声明了android gradle plugin的版本
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.1'
 		//classpath ('com.tencent.tinker:tinker-patch-gradle-plugin:1.9.1')
 
@@ -34,6 +34,7 @@ allprojects {
 		flatDir {
 			dirs 'libs'
 		}//把aar放在项目的根目录中
+        google()
     }
 	
 	tasks.withType(JavaCompile){

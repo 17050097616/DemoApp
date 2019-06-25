@@ -8,7 +8,6 @@ import com.a1.chm.myapplication.di.component.AppComponent;
 import com.a1.chm.myapplication.di.component.DaggerAppComponent;
 import com.a1.chm.myapplication.di.module.AppModule;
 import com.a1.chm.myapplication.di.module.HttpModule;
-import com.facebook.stetho.Stetho;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
@@ -76,7 +75,7 @@ public class MyApplication extends Application {
                 .enableNotification(true);
         SQLiteDatabase.loadLibs(this);//引用SQLiteDatabase的方法之前必须先添加这句代码
         DBManager.init(this);
-        Stetho.initializeWithDefaults(this);
+//        Stetho.initializeWithDefaults(this);
         //        MyApplication.getAppComponent();
     }
 

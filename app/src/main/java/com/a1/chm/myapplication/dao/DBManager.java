@@ -11,9 +11,6 @@ import org.greenrobot.greendao.database.EncryptedDatabase;
 
 import java.util.List;
 
-import static com.google.common.net.HttpHeaders.UPGRADE;
-
-
 public class DBManager {
     private static DBManager instance;
     private static Context mContext;
@@ -164,7 +161,8 @@ public class DBManager {
         author.setName("zone");
         author.setSex("boy");
         authorDao.insert(author);
-        Author authorByQuery = authorDao.queryBuilder().where(AuthorDao.Properties.Name.eq("zone"), AuthorDao.Properties.Sex.eq("boy")).unique();
+        Author authorByQuery = authorDao.queryBuilder().where(AuthorDao.Properties.Name.eq("zone"),
+                AuthorDao.Properties.Sex.eq("boy")).unique();
 
         Post firstPost = new Post();//写一篇文章
         firstPost.setAuthorId(authorByQuery.getId());
@@ -174,7 +172,8 @@ public class DBManager {
         secondPost.setContent("第二篇文章！");
         postDao.insertInTx(firstPost, secondPost);//存储文章
 
-        Author authorResult = authorDao.queryBuilder().where(AuthorDao.Properties.Name.eq("zone"), AuthorDao.Properties.Sex.eq("boy")).unique();//查询存储的结果
+        Author authorResult = authorDao.queryBuilder().where(AuthorDao.Properties.Name.eq("zone"),
+                AuthorDao.Properties.Sex.eq("boy")).unique();//查询存储的结果
         Log.d(TAG, authorResult.getName());
         Log.d(TAG, authorResult.getSex());
         for (int i = 0; i < authorResult.getPosts().size(); i++) {
@@ -278,7 +277,7 @@ public class DBManager {
         @Override
         public void onUpgrade(Database db, int oldVersion, int newVersion) {
 
-//            EncryptedMigrationHelper.migrate((EncryptedDatabase) db,AreaDao.class, PeopleDao.class, ProductDao.class);
+//EncryptedMigrationHelper.migrate((EncryptedDatabase) db,AreaDao.class, PeopleDao.class, ProductDao.class);
             if(oldVersion!=newVersion) {
                 MigrationHelper.migrate(db, new MigrationHelper.ReCreateAllTableListener() {
 
@@ -293,7 +292,7 @@ public class DBManager {
                     }
                 },AuthorDao.class,PostDao.class,StudentMsgBeanDao.class,ScoreBeanDao.class,TestDao.class
                 ,Test1Dao.class);
-                Log.e(UPGRADE,"upgrade run success");
+                Log.e(TAG,"upgrade run success");
             }else
                 Log.w(TAG, "onUpgrade: it was new" );
 

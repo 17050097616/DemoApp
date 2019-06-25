@@ -33,6 +33,12 @@
         <activity
             android:name="com.a1.chm.myapplication.ui.activity.LogActivity"
             />
+        <activity
+            android:name="com.a1.chm.myapplication.ui.activity.GreenDaoActivity"
+            />
+        <activity
+            android:name="com.a1.chm.myapplication.ui.activity.ButterKnifeActivity"
+            />
     </application>
 
 </manifest>

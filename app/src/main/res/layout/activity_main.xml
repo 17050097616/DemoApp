@@ -5,62 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     android:gravity="center"
     android:orientation="vertical"
     tools:context="com.a1.chm.myapplication.MainActivity">
-
-    <Button
-        android:id="@+id/btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="requestHttps"/>
-
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <Button
-        android:id="@+id/btn1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="insert"/>
-
-    <Button
-        android:id="@+id/btn_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="delete"/>
-
-    <Button
-        android:id="@+id/btnUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="btnUpdate"/>
-
-    <Button
-        android:id="@+id/queryBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="queryBtn"/>
-
-    <Button
-        android:id="@+id/queryTwoBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="queryTwoBtn"/>
-
-    <Button
-        android:id="@+id/queryMoreBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="queryMoreBtn"/>
 
     <Button
         android:id="@+id/btn_basicDownload"
@@ -82,6 +30,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="btn_socket"/>
+    <Button
+        android:id="@+id/greenDaoBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="greenDaoBtn"/>
+    <Button
+        android:id="@+id/butterKnifeBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="butterKnifeBtn"/>
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@android:color/darker_gray"
+        />
 
 
 </LinearLayout>

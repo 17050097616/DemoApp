@@ -1,0 +1,356 @@
+//根build.gradle
+buildscript {
+    ext.kotlin_version = '1.1.51'
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+		flatDir {
+             dirs "../moudle-A/libs,../moudle-B/libs,../moudle-C/libs".split(",")
+        }//推荐在项目的根build.gradle中统一添加,将所有包含aar包的模块名列出，这样不论是本Module或其他Module都不需要单独配置路径了
+    }
+}
+
+//app(或module)build.gradle
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-v4:21.0.3'
+    compile 'com.jakewharton:butterknife:6.0.0'
+	compile(name:'aar的名字（不用加后缀）', ext:'aar')
+	compile project(':LuaViewSDK')
+    ...
+	
+	implementation('org.hibernate:hibernate:3.1') {
+        //不同版本同时被依赖时，那么强制依赖这个版本的，默认false
+        force = true
+        //exclude可以设置不编译指定的模块，有三种写法:
+        exclude module: 'cglib' 
+        exclude group: 'org.jmock' 
+        exclude group: 'org.unwanted', module: 'iAmBuggy' 
+        //禁止依赖的传递，gradle自动添加子依赖项（依赖包所需的依赖），设置为false，则需要手动添加每个子依赖项，默认为true。
+        transitive = false
+    }
+	
+	redCompile 'com.github.hss01248:DialogUtil:1.0.1'
+    blueCompile 'com.github.hss01248:DialogUtil:1.0.2'//根据需求使用不同的jar工具。
+	
+	//demo
+	implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation('com.android.support.test:runner:0.5', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testImplementation 'org.robolectric:robolectric:3.8'
+    testImplementation 'org.robolectric:shadows-multidex:3.8'
+//    testImplementation 'org.robolectric:resources:3.8'
+
+    implementation 'com.android.support:multidex:1.0.3'
+
+    //ui
+    implementation "com.android.support:appcompat-v7:$supportLibVersion"
+    implementation "com.android.support:design:$supportLibVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
+
+    //compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-7'
+    implementation 'com.contrarywind:Android-PickerView:3.2.6'
+    implementation('com.afollestad.material-dialogs:core:0.9.6.0', {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v13'
+    })
+    implementation 'com.google.code.gson:gson:2.8.2'
+
+    //    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    //compile project(':LuaViewSDK')
+    implementation(name: 'LuaViewSDK-release', ext: 'aar')
+
+    //log
+//    implementation 'com.jakewharton.timber:timber:4.3.1'
+//
+//    //logback-android
+//    implementation 'org.slf4j:slf4j-api:1.7.21'
+//    implementation 'com.github.tony19:logback-android-core:1.1.1-5'
+//    implementation 'com.github.tony19:logback-android-classic:1.1.1-5'
+
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+
+    //    rxjava2
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.8'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+    //    tools
+    implementation 'com.google.dagger:dagger:2.11'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
+    compileOnly 'org.glassfish:javax.annotation:10.0-b28'
+    implementation 'com.jakewharton:butterknife:8.6.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.blankj:utilcode:1.14.3'
+
+    //greendao依赖
+    implementation 'org.greenrobot:greendao:3.2.2'
+    implementation 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.0.0'
+
+    //    compile 'com.facebook.stetho:stetho:1.3.1'
+    debugImplementation('com.amitshekhar.android:debug-db:1.0.3', {
+        exclude group: 'com.android.support'
+    })
+
+    //leakcanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+	
+	//    implementation 'xiaofei.library:hermes:0.7.0'
+    implementation 'xiaofei.library:hermes-eventbus:0.3.0'
+	// bean 转换
+    implementation 'org.mapstruct:mapstruct:1.3.0.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.3.0.Final'
+    testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.3.0.Final'
+}
+
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion '21.1.2'
+
+    defaultConfig {
+        applicationId "com.boohee.*"
+		
+		applicationId "com" // 这里设置了com作为默认包名,对应使用下面的buildTypes--xx--applicationIdSuffix
+		
+        minSdkVersion 14
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+        
+        multiDexEnabled true// dex突破65535的限制
+        
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng"]// 默认是umeng的渠道
+		
+		externalNativeBuild {
+            ndkBuild {
+                arguments "NDK_APPLICATION_MK:=src/main/jni/Application.mk"//指定 Application.mk 的路径
+                //abiFilters "armeabi-v7a", "armeabi"//指定生成哪些平台的 so 文件
+                cFlags "-DTEST_C_FLAG1", "-DTEST_C_FLAG2"
+                cppFlags "-DTEST_CPP_FLAG2", "-DTEST_CPP_FLAG2"//cFlags 和 cppFlags 是用来设置环境变量的, 一般不需要动
+            }
+        }//已实践,对ndk编程并没有效果,最好不引入
+    }
+	
+	externalNativeBuild {
+        ndkBuild {
+            path "src/main/jni/Android.mk"//指定 Android.mk 的路径
+        }
+    }//关联Android.mk,相当于执行了【Link C++ Project with Gradle】
+	
+	testOptions {
+		unitTests {
+		  includeAndroidResources = true
+		}
+	}//配置Robolectric
+	
+	compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8 //配置Java源代码的编译级别
+        targetCompatibility JavaVersion.VERSION_1_8 //配置生成Java字节码的版本
+    }//Java编译选项
+	
+	sourceSets {
+        standard {
+            assets.srcDirs = ['src/main/assets']//指定assets目录
+            jniLibs.srcDirs = ['libs']//指定lib库目录
+            java.srcDirs = ['src/main/java', 'src/main/aidl', 'src/standard/java']
+        }
+        chm_test {
+            assets.srcDirs = ['src/main/assets']//指定assets目录
+//            jniLibs.srcDirs = ['libs']//指定lib库目录
+            java.srcDirs = ['src/main/java', 'src/main/aidl', 'src/chm_test/java']
+           
+        }
+        main {
+            jni.srcDirs = [] // This prevents the auto generation of Android.mk
+            jniLibs.srcDir 'libs'
+            // This is not necessary unless you have precompiled libraries in your project.
+        }
+		
+		androidTest.setRoot('tests')//注意：setRoot() 会移动所有的 sourceSet（包括它的子目录）到新的目录。例子中把 src/androidTest/* 移动到 tests/*
+    }
+    lintOptions {
+        abortOnError false//lint时候终止错误上报,防止编译的时候莫名的失败 
+    }
+
+    signingConfigs {
+        debug {
+            // No debug config
+        }
+
+        release {
+            storeFile file("../yourapp.keystore")
+            storePassword "your password"
+            keyAlias "your alias"
+            keyPassword "your password"
+			
+			
+			storeFile file(STORE_FILE_PATH)
+			storePassword STORE_PASSWORD
+			keyAlias KEY_ALIAS
+			keyPassword KEY_PASSWORD
+    
+        }
+    }
+
+    buildTypes {//build类型  
+        debug {
+            ext.enableCrashlytics = false //如果您不需要运行 Crashlytics 报告，停用插件，以便加快您的调试构建的速度
+            buildConfigField "boolean", "LOG_DEBUG", "true"// 显示Log
+			applicationIdSuffix '.kale.debug' // 设置debug时的包名为com.kale.debug
+            versionNameSuffix "-debug"
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
+        }
+
+        release {
+            
+            buildConfigField "boolean", "LOG_DEBUG", "false"// 不显示Log
+			applicationIdSuffix '.kale.gradle' // 设置release时的包名为com.kale.gradle
+            minifyEnabled true
+            zipAlignEnabled true
+            
+            shrinkResources true// 移除无用的resource文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                    	// 输出apk名称为boohee_v1.0_2015-01-15_wandoujia.apk
+                        def fileName = "boohee_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+			
+			applicationVariants.all {
+				def buildType = it.buildType.name//判断是release还是debug版本
+				//获取当前时间的"YYYY-MM-dd"格式。
+				def createTime = new Date().format("YYYYMMdd-HHmmss", TimeZone.getTimeZone("GMT+08:00"))
+				if (buildType == "release") {//如果是正式包,将其输入到指定文件夹
+	//                it.getPackageApplication().outputDirectory = new File('E:\\workSpace\\Cashier\\apkrelease')
+					it.getPackageApplication().outputDirectory = new File(rootDir.getAbsolutePath()+"/apkrelease")
+	//                it.getPackageApplication().outputDirectory = new File('C:\\out_apk'+ "/${it.productFlavors[0].applicationId}/${createTime}")
+					it.getPackageApplication().outputScope.apkDatas.forEach { apkData ->
+						apkData.outputFileName = "${appName}_${createTime}_release.apk"
+					}
+				}
+				if (buildType == "debug") {
+					it.getPackageApplication().outputDirectory = new File(rootDir.getAbsolutePath()+"/apkdebug")
+					it.getPackageApplication().outputScope.apkDatas.forEach { apkData ->
+						apkData.outputFileName = "${appName}_${createTime}_release.apk"
+					}
+				}
+			}//修改app的名字和输出目录
+        }
+    }
+	
+	flavorDimensions "color","price"
+	productFlavors {
+		red { 
+			flavorDimension "color"
+			applicationId "com.crazyman.product.city "//不同产品，不同包名
+            versionName "version-city -1.0"
+			manifestPlaceholders = [SD_CHANNEL_VALUE: "red",name："redapp"]
+			//同时在manifest中需要填写
+			//<meta-data android:name="SD"  android:value="${SD_CHANNEL_VALUE}"/>
+		}
+		blue { flavorDimension "color"}
+		free { flavorDimension "price"}
+		pay { flavorDimension "price"}
+        
+    }//打不同的包
+	
+    // 友盟多渠道打包
+    productFlavors {
+		wandoujia{}
+        xiaomi{}
+        qq{}
+        _360 {}
+    }
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }// 友盟多渠道打包,通过productFlavors批量修改
+	
+	packagingOptions {  //使用 packagingOptions 配置的 exclude 语句删除a.jar与b.jar的重复文件
+		exclude 'META-INF/ASL2.0'//排除一些文件  
+		exclude 'META-INF/LICENSE'  
+		exclude 'META-INF/NOTICE'  
+		exclude 'META-INF/MANIFEST.MF'  
+	} 
+	
+	splits {
+        abi {
+            enable true  //启用ABI拆分机制
+            reset()  //重置ABI列表为只包含一个空字符串
+            include 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a' //与include一起使用来可以表示要使用哪一个ABI
+             universalApk
+             true//是否打包一个通用版本（包含所有的ABI）。默认值为 false。
+        }
+    }
+ 
+    // ABI的code码
+    project.ext.versionCodes = ['armeabi': 1, 'armeabi-v7a': 2, 'arm64-v8a': 3, 'mips': 5, 'mips64': 6, 'x86': 8, 'x86_64': 9]
+ 
+    android.applicationVariants.all { variant ->
+        // 最终标记
+        variant.outputs.each { output ->
+            output.versionCodeOverride =
+                    project.ext.versionCodes.get(output.getFilter(com.android.build.OutputFile.ABI), 0) * 1000000 + android.defaultConfig.versionCode
+        }
+    }
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion '26.1.0'
+            }
+        }
+    }
+}//自己统一为所有依赖指定support包的版本,不需要为每个依赖单独排除了
+
+
+
+repositories {
+	flatDir {
+		dirs 'libs' //this way we can find the .aar file in libs folder
+	}
+}
