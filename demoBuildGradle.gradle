@@ -108,7 +108,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
-    implementation 'com.blankj:utilcode:1.14.3'
+    implementation 'com.blankj:utilcode:1.23.0'
 
     //greendao依赖
     implementation 'org.greenrobot:greendao:3.2.2'
@@ -282,13 +282,26 @@ android {
 	
 	flavorDimensions "color","price"
 	productFlavors {
-		red { 
+		red {
 			flavorDimension "color"
 			applicationId "com.crazyman.product.city "//不同产品，不同包名
             versionName "version-city -1.0"
-			manifestPlaceholders = [SD_CHANNEL_VALUE: "red",name："redapp"]
-			//同时在manifest中需要填写
+			manifestPlaceholders = [SD_CHANNEL_VALUE: "red",name："redapp"] //同时在manifest中需要填写
 			//<meta-data android:name="SD"  android:value="${SD_CHANNEL_VALUE}"/>
+			
+			 // 修改 AndroidManifest.xml 里渠道变量
+            manifestPlaceholders = [CHANNEL_VALUE: "SatayKing"
+                                    , app_icon   : "@mipmap/ic_launcher_shadiewang",
+                                    //此方式可直接在 manifest 中通过${icon}进行占位引用;或者在main同级中创建不同渠道后创建 res 资源文件
+                                    icon         : "@mipmap/ic_launcher_shadiewang",
+                                    //极光相关
+                                    JPUSH_PKGNAME: applicationId,
+                                    JPUSH_APPKEY : "xxxxxxx", //JPush上注册的包名对应的appkey.
+                                    JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+                                    GoogleMapKey : "AIzaSyCLJ9Gng-xxxxx" //Google Map 相关
+
+            ]
+			
 		}
 		blue { flavorDimension "color"}
 		free { flavorDimension "price"}
@@ -346,8 +359,6 @@ configurations.all {
         }
     }
 }//自己统一为所有依赖指定support包的版本,不需要为每个依赖单独排除了
-
-
 
 repositories {
 	flatDir {
